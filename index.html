@@ -20,7 +20,6 @@
             --text-primary: #c9d1d9;
             --text-secondary: #8b949e;
             --accent: #58a6ff;
-            --accent-hover: #79c0ff;
             --mobile-badge: #2ea043;
             --danger: #f85149;
             --radius: 8px;
@@ -46,17 +45,14 @@
             margin-bottom: 20px;
             text-align: center;
         }
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
         header h1 {
             font-size: 2.5rem;
             font-weight: 700;
             letter-spacing: -0.5px;
+        }
+        header a {
+            color: var(--accent);
+            text-decoration: none;
         }
         .subtitle {
             color: var(--text-secondary);
@@ -129,6 +125,10 @@
             border-radius: var(--radius);
             padding: 20px;
             transition: all var(--transition);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
         .list-item:hover {
             border-color: var(--accent);
@@ -182,32 +182,6 @@
             font-size: 0.8rem;
             font-weight: 600;
         }
-        .verification-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            color: #fff;
-            background: linear-gradient(135deg, #ff4444, #cc0000);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all var(--transition);
-            margin-left: 10px;
-            cursor: pointer;
-            border: none;
-        }
-        .verification-badge:hover {
-            transform: scale(1.05);
-            box-shadow: 0 2px 8px rgba(255, 68, 68, 0.4);
-        }
-        .level-info {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
         .record-item {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
@@ -246,74 +220,89 @@
             border: 1px solid var(--accent);
             border-radius: 20px;
             transition: all var(--transition);
-            cursor: pointer;
-            background: transparent;
         }
         .record-video:hover {
             background: var(--accent);
             color: #fff;
         }
-        .video-modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
+
+        /* ============ LEVEL PAGE ============ */
+        .back-btn {
+            display: inline-block;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            transition: all var(--transition);
         }
-        .video-modal-overlay.active {
-            display: flex;
+        .back-btn:hover {
+            background: var(--bg-tertiary);
         }
-        .video-modal {
+        .level-page-header {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .level-page-header .level-name {
+            font-size: 2rem;
+        }
+        .level-page-header .level-creator {
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+        .video-section {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: var(--radius);
             padding: 20px;
-            width: 90%;
-            max-width: 800px;
-            position: relative;
+            margin-bottom: 20px;
         }
-        .video-modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .video-section h2 {
             margin-bottom: 15px;
+            font-size: 1.3rem;
         }
-        .video-modal-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-        .close-modal {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 4px;
-            transition: background var(--transition);
-        }
-        .close-modal:hover {
-            background: var(--bg-tertiary);
-        }
-        .video-container {
+        .video-wrapper {
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             border-radius: var(--radius);
         }
-        .video-container iframe {
+        .video-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             border: none;
+        }
+        .level-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .info-card {
+            background: var(--bg-tertiary);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+        .info-card .label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .info-card .value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-top: 4px;
         }
         footer {
             margin-top: 40px;
@@ -326,9 +315,6 @@
         footer a {
             color: var(--accent);
             text-decoration: none;
-        }
-        footer a:hover {
-            text-decoration: underline;
         }
         .loading {
             text-align: center;
@@ -347,10 +333,10 @@
         @media (max-width: 768px) {
             .container { padding: 10px; }
             header h1 { font-size: 1.8rem; }
-            .header-content { flex-direction: column; gap: 10px; }
             .level-header { flex-direction: column; align-items: flex-start; }
             .record-item { flex-direction: column; align-items: flex-start; }
             .record-details { margin-left: 0; }
+            .level-page-header .level-name { font-size: 1.5rem; }
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -362,161 +348,88 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="header-content">
-                <div>
-                    <h1>Short Challenge List</h1>
-                    <p class="subtitle">A community-driven list of the hardest Short Challenges</p>
-                </div>
-            </div>
-        </header>
-
-        <nav>
-            <button class="nav-btn active" data-tab="levels">Levels</button>
-            <button class="nav-btn" data-tab="records">Records</button>
-        </nav>
-
-        <main>
-            <section id="levels-tab" class="tab-content active">
-                <div class="controls">
-                    <input type="text" id="level-search" placeholder="Search levels..." class="search-input">
-                </div>
-                <div id="levels-container" class="list-container">
-                    <div class="loading">Loading levels...</div>
-                </div>
-            </section>
-
-            <section id="records-tab" class="tab-content">
-                <div class="controls">
-                    <input type="text" id="record-search" placeholder="Search records..." class="search-input">
-                </div>
-                <div id="records-container" class="list-container">
-                    <div class="loading">Loading records...</div>
-                </div>
-            </section>
-        </main>
-
-        <footer>
-            <p>Short Challenge List &copy; 2024 | Based on GDListTemplate</p>
-        </footer>
-    </div>
-
-    <div class="video-modal-overlay" id="videoModal">
-        <div class="video-modal">
-            <div class="video-modal-header">
-                <span class="video-modal-title" id="modalTitle">Verification Video</span>
-                <button class="close-modal" id="closeModal">&times;</button>
-            </div>
-            <div class="video-container">
-                <iframe id="videoFrame" src="" allowfullscreen></iframe>
-            </div>
-        </div>
+    <div class="container" id="app">
+        <div class="loading">Loading...</div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            initNavigation();
-            loadData();
-            initVideoModal();
-        });
+        (async () => {
+            const app = document.getElementById('app');
+            const hash = window.location.hash;
 
-        function initNavigation() {
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-                    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-                    btn.classList.add('active');
-                    document.getElementById(btn.dataset.tab + '-tab').classList.add('active');
-                });
-            });
-        }
-
-        function initVideoModal() {
-            const modal = document.getElementById('videoModal');
-            const closeBtn = document.getElementById('closeModal');
-            const videoFrame = document.getElementById('videoFrame');
-
-            closeBtn.addEventListener('click', () => {
-                modal.classList.remove('active');
-                videoFrame.src = '';
-            });
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                    videoFrame.src = '';
-                }
-            });
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal.classList.contains('active')) {
-                    modal.classList.remove('active');
-                    videoFrame.src = '';
-                }
-            });
-        }
-
-        function openVideoModal(videoUrl, levelName) {
-            const modal = document.getElementById('videoModal');
-            const videoFrame = document.getElementById('videoFrame');
-            const modalTitle = document.getElementById('modalTitle');
-            let embedUrl = videoUrl;
-            if (videoUrl.includes('youtu.be/')) {
-                embedUrl = 'https://www.youtube.com/embed/' + videoUrl.split('youtu.be/')[1].split('?')[0];
-            } else if (videoUrl.includes('watch?v=')) {
-                embedUrl = 'https://www.youtube.com/embed/' + videoUrl.split('watch?v=')[1].split('&')[0];
-            }
-            modalTitle.textContent = 'Verification: ' + levelName;
-            videoFrame.src = embedUrl;
-            modal.classList.add('active');
-        }
-
-        async function loadData() {
+            // Load data
+            let listData = [], recordsData = [];
             try {
                 const [listRes, recordsRes] = await Promise.all([
                     fetch('data/list.json'),
                     fetch('data/records.json')
                 ]);
-                if (!listRes.ok || !recordsRes.ok) throw new Error('Failed to load data');
-                const listData = await listRes.json();
-                const recordsData = await recordsRes.json();
-                renderLevels(listData);
-                renderRecords(recordsData);
-                initSearch();
-                initVideoButtons();
-            } catch (error) {
-                console.error('Error loading data:', error);
-                document.getElementById('levels-container').innerHTML = '<div class="error-message">⚠️ Failed to load levels. Make sure data/list.json exists.</div>';
-                document.getElementById('records-container').innerHTML = '<div class="error-message">⚠️ Failed to load records. Make sure data/records.json exists.</div>';
-            }
-        }
-
-        function initVideoButtons() {
-            document.querySelectorAll('.watch-verification').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    openVideoModal(btn.dataset.video, btn.dataset.level);
-                });
-            });
-        }
-
-        function renderLevels(levels) {
-            const container = document.getElementById('levels-container');
-            if (!levels || levels.length === 0) {
-                container.innerHTML = '<div class="loading">No levels found.</div>';
+                listData = await listRes.json();
+                recordsData = await recordsRes.json();
+            } catch (e) {
+                app.innerHTML = '<div class="error-message">⚠️ Failed to load data files.</div>';
                 return;
             }
-            container.innerHTML = levels.map((level, index) => {
-                const rank = index + 1;
-                const rankClass = rank <= 3 ? 'rank-' + rank : '';
-                return `
-                    <div class="list-item" data-searchable="${level.name.toLowerCase()} ${level.creator.toLowerCase()} ${level.verifier ? level.verifier.toLowerCase() : ''}">
+
+            // Check if we're on a level page (hash matches a level name)
+            if (hash.startsWith('#level-')) {
+                const levelIndex = parseInt(hash.replace('#level-', ''));
+                if (!isNaN(levelIndex) && levelIndex >= 0 && levelIndex < listData.length) {
+                    renderLevelPage(listData[levelIndex], levelIndex);
+                } else {
+                    app.innerHTML = '<div class="error-message">⚠️ Level not found. <a href="index.html" style="color: var(--accent);">Go back</a></div>';
+                }
+            } else {
+                renderMainPage(listData, recordsData);
+            }
+
+            function renderMainPage(listData, recordsData) {
+                app.innerHTML = `
+                    <header>
+                        <h1>Short Challenge List</h1>
+                        <p class="subtitle">A community-driven list of the hardest Short Challenges</p>
+                    </header>
+                    <nav>
+                        <button class="nav-btn active" data-tab="levels">Levels</button>
+                        <button class="nav-btn" data-tab="records">Records</button>
+                    </nav>
+                    <main>
+                        <section id="levels-tab" class="tab-content active">
+                            <div class="controls">
+                                <input type="text" id="level-search" placeholder="Search levels..." class="search-input">
+                            </div>
+                            <div id="levels-container" class="list-container"></div>
+                        </section>
+                        <section id="records-tab" class="tab-content">
+                            <div class="controls">
+                                <input type="text" id="record-search" placeholder="Search records..." class="search-input">
+                            </div>
+                            <div id="records-container" class="list-container"></div>
+                        </section>
+                    </main>
+                    <footer>
+                        <p>Short Challenge List &copy; 2024 | Based on GDListTemplate</p>
+                    </footer>
+                `;
+
+                // Nav
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+                        btn.classList.add('active');
+                        document.getElementById(btn.dataset.tab + '-tab').classList.add('active');
+                    });
+                });
+
+                // Render levels
+                const lc = document.getElementById('levels-container');
+                lc.innerHTML = listData.map((level, i) => `
+                    <a href="#level-${i}" class="list-item" data-searchable="${level.name.toLowerCase()} ${level.creator.toLowerCase()} ${level.verifier ? level.verifier.toLowerCase() : ''}">
                         <div class="level-header">
-                            <span class="level-rank ${rankClass}">#${rank}</span>
+                            <span class="level-rank ${i < 3 ? 'rank-' + (i+1) : ''}">#${i+1}</span>
                             <div style="flex: 1;">
-                                <div class="level-info">
-                                    <span class="level-name">${esc(level.name)}</span>
-                                    ${level.verification ? '<a href="#" class="verification-badge watch-verification" data-video="' + esc(level.verification) + '" data-level="' + esc(level.name) + '">Verification</a>' : ''}
-                                </div>
+                                <span class="level-name">${esc(level.name)}</span>
                                 <div class="level-creator">by ${esc(level.creator)}${level.verifier ? ' · Verified by ' + esc(level.verifier) : ''}</div>
                             </div>
                         </div>
@@ -526,49 +439,82 @@
                             ${level.length ? '<span class="detail-item">⏱ ' + esc(level.length) + '</span>' : ''}
                             ${level.enjoyment ? '<span class="detail-item">⭐ ' + level.enjoyment + '/10</span>' : ''}
                         </div>
-                    </div>
-                `;
-            }).join('');
-        }
+                    </a>
+                `).join('');
 
-        function renderRecords(records) {
-            const container = document.getElementById('records-container');
-            if (!records || records.length === 0) {
-                container.innerHTML = '<div class="loading">No records found.</div>';
-                return;
+                // Render records
+                const rc = document.getElementById('records-container');
+                rc.innerHTML = recordsData.length === 0 ? '<div class="loading">No records found.</div>' :
+                    recordsData.map(r => `
+                        <div class="record-item" data-searchable="${r.player.toLowerCase()} ${r.level.toLowerCase()}">
+                            <div>
+                                <span class="record-player">${esc(r.player)}</span>
+                                ${r.mobile ? '<span class="mobile-badge">📱 Mobile</span>' : ''}
+                            </div>
+                            <span class="record-level">${esc(r.level)}</span>
+                            <div class="record-details">
+                                ${r.progress ? '<span class="detail-item">📈 ' + esc(r.progress) + '</span>' : ''}
+                                ${r.date ? '<span class="detail-item">📅 ' + esc(r.date) + '</span>' : ''}
+                            </div>
+                        </div>
+                    `).join('');
+
+                // Search
+                document.getElementById('level-search').addEventListener('input', e => filter('levels-container', e.target.value));
+                document.getElementById('record-search').addEventListener('input', e => filter('records-container', e.target.value));
             }
-            container.innerHTML = records.map(record => `
-                <div class="record-item" data-searchable="${record.player.toLowerCase()} ${record.level.toLowerCase()}">
-                    <div>
-                        <span class="record-player">${esc(record.player)}</span>
-                        ${record.mobile ? '<span class="mobile-badge">📱 Mobile</span>' : ''}
+
+            function renderLevelPage(level, index) {
+                const videoEmbed = level.verification ? getEmbedUrl(level.verification) : null;
+                app.innerHTML = `
+                    <header>
+                        <h1><a href="index.html">Short Challenge List</a></h1>
+                    </header>
+                    <a href="index.html" class="back-btn">← Back to list</a>
+                    <div class="level-page-header">
+                        <span style="color: var(--accent); font-weight: 800; font-size: 1.2rem;">#${index+1}</span>
+                        <div class="level-name">${esc(level.name)}</div>
+                        <div class="level-creator">by ${esc(level.creator)}${level.verifier ? ' · Verified by ' + esc(level.verifier) : ''}</div>
+                        <div class="level-info-grid">
+                            ${level.id ? '<div class="info-card"><div class="label">Level ID</div><div class="value">' + level.id + '</div></div>' : ''}
+                            ${level.difficulty ? '<div class="info-card"><div class="label">Difficulty</div><div class="value">' + esc(level.difficulty) + '</div></div>' : ''}
+                            ${level.length ? '<div class="info-card"><div class="label">Length</div><div class="value">' + esc(level.length) + '</div></div>' : ''}
+                            ${level.enjoyment ? '<div class="info-card"><div class="label">Enjoyment</div><div class="value">' + level.enjoyment + '/10</div></div>' : ''}
+                        </div>
                     </div>
-                    <span class="record-level">${esc(record.level)}</span>
-                    <div class="record-details">
-                        ${record.progress ? '<span class="detail-item">📈 ' + esc(record.progress) + '</span>' : ''}
-                        ${record.date ? '<span class="detail-item">📅 ' + esc(record.date) + '</span>' : ''}
-                        ${record.video ? '<a href="#" class="record-video watch-verification" data-video="' + esc(record.video) + '" data-level="' + esc(record.level) + '">▶ Watch</a>' : ''}
-                    </div>
-                </div>
-            `).join('');
-        }
+                    ${videoEmbed ? `
+                        <div class="video-section">
+                            <h2>📺 Verification Video</h2>
+                            <div class="video-wrapper">
+                                <iframe src="${videoEmbed}" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    ` : '<p style="color: var(--text-secondary);">No verification video available.</p>'}
+                    <footer>
+                        <p>Short Challenge List &copy; 2024</p>
+                    </footer>
+                `;
+            }
 
-        function initSearch() {
-            document.getElementById('level-search').addEventListener('input', (e) => filterItems('levels-container', e.target.value.toLowerCase()));
-            document.getElementById('record-search').addEventListener('input', (e) => filterItems('records-container', e.target.value.toLowerCase()));
-        }
+            function getEmbedUrl(url) {
+                if (url.includes('youtu.be/')) return 'https://www.youtube.com/embed/' + url.split('youtu.be/')[1].split('?')[0];
+                if (url.includes('watch?v=')) return 'https://www.youtube.com/embed/' + url.split('watch?v=')[1].split('&')[0];
+                return url;
+            }
 
-        function filterItems(containerId, query) {
-            document.querySelectorAll('#' + containerId + ' .list-item, #' + containerId + ' .record-item').forEach(item => {
-                item.style.display = (item.dataset.searchable || '').includes(query) ? '' : 'none';
-            });
-        }
+            function filter(containerId, query) {
+                const q = query.toLowerCase();
+                document.querySelectorAll('#' + containerId + ' .list-item, #' + containerId + ' .record-item').forEach(item => {
+                    item.style.display = (item.dataset.searchable || '').includes(q) ? '' : 'none';
+                });
+            }
 
-        function esc(str) {
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
+            function esc(str) {
+                const div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
+            }
+        })();
     </script>
 </body>
 </html>
