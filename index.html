@@ -353,6 +353,11 @@
     </div>
 
     <script>
+        // Auto-refresh when hash changes (clicking a level)
+        window.addEventListener('hashchange', () => {
+            location.reload();
+        });
+
         (async () => {
             const app = document.getElementById('app');
             const hash = window.location.hash;
@@ -367,17 +372,17 @@
                 listData = await listRes.json();
                 recordsData = await recordsRes.json();
             } catch (e) {
-                app.innerHTML = '<div class="error-message">⚠️ Failed to load data files.</div>';
+                app.innerHTML = '<div class="error-message">⚠️ Failed to load data files. Check that data/list.json and data/records.json exist.</div>';
                 return;
             }
 
-            // Check if we're on a level page (hash matches a level name)
+            // Check if we're on a level page (hash matches a level index)
             if (hash.startsWith('#level-')) {
                 const levelIndex = parseInt(hash.replace('#level-', ''));
                 if (!isNaN(levelIndex) && levelIndex >= 0 && levelIndex < listData.length) {
                     renderLevelPage(listData[levelIndex], levelIndex);
                 } else {
-                    app.innerHTML = '<div class="error-message">⚠️ Level not found. <a href="index.html" style="color: var(--accent);">Go back</a></div>';
+                    app.innerHTML = '<div class="error-message">⚠️ Level not found. <a href="index.html" style="color: var(--accent);">Go back to list</a></div>';
                 }
             } else {
                 renderMainPage(listData, recordsData);
@@ -412,7 +417,7 @@
                     </footer>
                 `;
 
-                // Nav
+                // Navigation
                 document.querySelectorAll('.nav-btn').forEach(btn => {
                     btn.addEventListener('click', () => {
                         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
