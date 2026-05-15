@@ -4,17 +4,370 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Short Challenge List</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/png" href="assets/list_icon.png">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --border-color: #30363d;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+            --mobile-badge: #2ea043;
+            --danger: #f85149;
+            --radius: 8px;
+            --transition: 0.2s ease;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 30px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+        nav {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 5px;
+        }
+        .nav-btn {
+            flex: 1;
+            padding: 12px 24px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all var(--transition);
+        }
+        .nav-btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        .nav-btn.active {
+            background: var(--accent);
+            color: #fff;
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            color: var(--text-primary);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color var(--transition);
+        }
+        .search-input:focus {
+            border-color: var(--accent);
+        }
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .list-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 20px;
+            transition: all var(--transition);
+        }
+        .list-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .level-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .level-rank {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            min-width: 40px;
+        }
+        .rank-1 { color: #ffd700; }
+        .rank-2 { color: #c0c0c0; }
+        .rank-3 { color: #cd7f32; }
+        .level-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        .level-creator {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .level-details {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--bg-tertiary);
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+        .mobile-badge {
+            background: var(--mobile-badge);
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .verification-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: #fff;
+            background: linear-gradient(135deg, #ff4444, #cc0000);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all var(--transition);
+            margin-left: 10px;
+            cursor: pointer;
+            border: none;
+        }
+        .verification-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(255, 68, 68, 0.4);
+        }
+        .level-info {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .record-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            transition: all var(--transition);
+        }
+        .record-item:hover {
+            border-color: var(--accent);
+        }
+        .record-player {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .record-level {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .record-details {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-left: auto;
+            flex-wrap: wrap;
+        }
+        .record-video {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 5px 12px;
+            border: 1px solid var(--accent);
+            border-radius: 20px;
+            transition: all var(--transition);
+            cursor: pointer;
+            background: transparent;
+        }
+        .record-video:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+        .video-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .video-modal-overlay.active {
+            display: flex;
+        }
+        .video-modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+        }
+        .video-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .video-modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background var(--transition);
+        }
+        .close-modal:hover {
+            background: var(--bg-tertiary);
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: var(--radius);
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+        }
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+        .error-message {
+            background: rgba(248, 81, 73, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            header h1 { font-size: 1.8rem; }
+            .header-content { flex-direction: column; gap: 10px; }
+            .level-header { flex-direction: column; align-items: flex-start; }
+            .record-item { flex-direction: column; align-items: flex-start; }
+            .record-details { margin-left: 0; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .list-item, .record-item {
+            animation: fadeIn 0.3s ease forwards;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
             <div class="header-content">
-                <img src="assets/list_icon.png" alt="Logo" class="logo" onerror="this.style.display='none'">
                 <div>
                     <h1>Short Challenge List</h1>
-                    <p class="subtitle">Short Challenge List</p>
+                    <p class="subtitle">A community-driven list of the hardest Short Challenges</p>
                 </div>
             </div>
         </header>
@@ -25,7 +378,6 @@
         </nav>
 
         <main>
-            <!-- Levels Tab -->
             <section id="levels-tab" class="tab-content active">
                 <div class="controls">
                     <input type="text" id="level-search" placeholder="Search levels..." class="search-input">
@@ -35,7 +387,6 @@
                 </div>
             </section>
 
-            <!-- Records Tab -->
             <section id="records-tab" class="tab-content">
                 <div class="controls">
                     <input type="text" id="record-search" placeholder="Search records..." class="search-input">
@@ -47,10 +398,177 @@
         </main>
 
         <footer>
-            <p>Short Challenge List &copy; 2024 | Based on GDListTemplate by <a href="https://github.com/TheShittyList" target="_blank">TheShittyList</a></p>
+            <p>Short Challenge List &copy; 2024 | Based on GDListTemplate</p>
         </footer>
     </div>
 
-    <script src="js/main.js"></script>
+    <div class="video-modal-overlay" id="videoModal">
+        <div class="video-modal">
+            <div class="video-modal-header">
+                <span class="video-modal-title" id="modalTitle">Verification Video</span>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="video-container">
+                <iframe id="videoFrame" src="" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initNavigation();
+            loadData();
+            initVideoModal();
+        });
+
+        function initNavigation() {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.getElementById(btn.dataset.tab + '-tab').classList.add('active');
+                });
+            });
+        }
+
+        function initVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const closeBtn = document.getElementById('closeModal');
+            const videoFrame = document.getElementById('videoFrame');
+
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+                videoFrame.src = '';
+            });
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    videoFrame.src = '';
+                }
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    modal.classList.remove('active');
+                    videoFrame.src = '';
+                }
+            });
+        }
+
+        function openVideoModal(videoUrl, levelName) {
+            const modal = document.getElementById('videoModal');
+            const videoFrame = document.getElementById('videoFrame');
+            const modalTitle = document.getElementById('modalTitle');
+            let embedUrl = videoUrl;
+            if (videoUrl.includes('youtu.be/')) {
+                embedUrl = 'https://www.youtube.com/embed/' + videoUrl.split('youtu.be/')[1].split('?')[0];
+            } else if (videoUrl.includes('watch?v=')) {
+                embedUrl = 'https://www.youtube.com/embed/' + videoUrl.split('watch?v=')[1].split('&')[0];
+            }
+            modalTitle.textContent = 'Verification: ' + levelName;
+            videoFrame.src = embedUrl;
+            modal.classList.add('active');
+        }
+
+        async function loadData() {
+            try {
+                const [listRes, recordsRes] = await Promise.all([
+                    fetch('data/list.json'),
+                    fetch('data/records.json')
+                ]);
+                if (!listRes.ok || !recordsRes.ok) throw new Error('Failed to load data');
+                const listData = await listRes.json();
+                const recordsData = await recordsRes.json();
+                renderLevels(listData);
+                renderRecords(recordsData);
+                initSearch();
+                initVideoButtons();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('levels-container').innerHTML = '<div class="error-message">⚠️ Failed to load levels. Make sure data/list.json exists.</div>';
+                document.getElementById('records-container').innerHTML = '<div class="error-message">⚠️ Failed to load records. Make sure data/records.json exists.</div>';
+            }
+        }
+
+        function initVideoButtons() {
+            document.querySelectorAll('.watch-verification').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openVideoModal(btn.dataset.video, btn.dataset.level);
+                });
+            });
+        }
+
+        function renderLevels(levels) {
+            const container = document.getElementById('levels-container');
+            if (!levels || levels.length === 0) {
+                container.innerHTML = '<div class="loading">No levels found.</div>';
+                return;
+            }
+            container.innerHTML = levels.map((level, index) => {
+                const rank = index + 1;
+                const rankClass = rank <= 3 ? 'rank-' + rank : '';
+                return `
+                    <div class="list-item" data-searchable="${level.name.toLowerCase()} ${level.creator.toLowerCase()} ${level.verifier ? level.verifier.toLowerCase() : ''}">
+                        <div class="level-header">
+                            <span class="level-rank ${rankClass}">#${rank}</span>
+                            <div style="flex: 1;">
+                                <div class="level-info">
+                                    <span class="level-name">${esc(level.name)}</span>
+                                    ${level.verification ? '<a href="#" class="verification-badge watch-verification" data-video="' + esc(level.verification) + '" data-level="' + esc(level.name) + '">Verification</a>' : ''}
+                                </div>
+                                <div class="level-creator">by ${esc(level.creator)}${level.verifier ? ' · Verified by ' + esc(level.verifier) : ''}</div>
+                            </div>
+                        </div>
+                        <div class="level-details">
+                            ${level.id ? '<span class="detail-item">🔢 ID: ' + level.id + '</span>' : ''}
+                            ${level.difficulty ? '<span class="detail-item">📊 ' + esc(level.difficulty) + '</span>' : ''}
+                            ${level.length ? '<span class="detail-item">⏱ ' + esc(level.length) + '</span>' : ''}
+                            ${level.enjoyment ? '<span class="detail-item">⭐ ' + level.enjoyment + '/10</span>' : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderRecords(records) {
+            const container = document.getElementById('records-container');
+            if (!records || records.length === 0) {
+                container.innerHTML = '<div class="loading">No records found.</div>';
+                return;
+            }
+            container.innerHTML = records.map(record => `
+                <div class="record-item" data-searchable="${record.player.toLowerCase()} ${record.level.toLowerCase()}">
+                    <div>
+                        <span class="record-player">${esc(record.player)}</span>
+                        ${record.mobile ? '<span class="mobile-badge">📱 Mobile</span>' : ''}
+                    </div>
+                    <span class="record-level">${esc(record.level)}</span>
+                    <div class="record-details">
+                        ${record.progress ? '<span class="detail-item">📈 ' + esc(record.progress) + '</span>' : ''}
+                        ${record.date ? '<span class="detail-item">📅 ' + esc(record.date) + '</span>' : ''}
+                        ${record.video ? '<a href="#" class="record-video watch-verification" data-video="' + esc(record.video) + '" data-level="' + esc(record.level) + '">▶ Watch</a>' : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function initSearch() {
+            document.getElementById('level-search').addEventListener('input', (e) => filterItems('levels-container', e.target.value.toLowerCase()));
+            document.getElementById('record-search').addEventListener('input', (e) => filterItems('records-container', e.target.value.toLowerCase()));
+        }
+
+        function filterItems(containerId, query) {
+            document.querySelectorAll('#' + containerId + ' .list-item, #' + containerId + ' .record-item').forEach(item => {
+                item.style.display = (item.dataset.searchable || '').includes(query) ? '' : 'none';
+            });
+        }
+
+        function esc(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+    </script>
 </body>
 </html>
