@@ -1,0 +1,32 @@
+[
+    {
+        "name": "No Record Challenge",
+        "creator": "CreatorOne",
+        "verifier": "VerifierOne",
+        "id": "11111111",
+        "difficulty": "Short Challenge",
+        "length": "25s",
+        "enjoyment": "7",
+        "verification": "https://youtu.be/example1"
+    },
+    {
+        "name": "One Record Challenge",
+        "creator": "CreatorTwo",
+        "verifier": "VerifierTwo",
+        "id": "22222222",
+        "difficulty": "Short Challenge",
+        "length": "30s",
+        "enjoyment": "8",
+        "verification": "https://youtu.be/example2"
+    },
+    {
+        "name": "Empty Challenge",
+        "creator": "CreatorThree & CreatorFour",
+        "verifier": "VerifierThree",
+        "id": "33333333",
+        "difficulty": "Short Challenge",
+        "length": "20s",
+        "enjoyment": "6",
+        "verification": "https://youtu.be/example3"
+    }
+]
