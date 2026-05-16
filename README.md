@@ -1,2 +1,2 @@
 # List
-The Medium Challenge List Repository
+The Short Challenge List Repository
